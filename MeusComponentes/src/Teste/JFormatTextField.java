@@ -1,9 +1,5 @@
 package Teste;
 
-import Enuns.MeuTipo;
-import com.sun.java.accessibility.util.SwingEventMonitor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,20 +10,25 @@ import javax.swing.text.MaskFormatter;
 
 /**
  *
- * @author MadaraxDD
+ * @author BrunoCA-xD
  */
 public class JFormatTextField extends javax.swing.JFormattedTextField {
 
-    private int MaxLength;
-    private boolean CanBeNull;
-    private MeuTipo Tipo_De_Dados;
+    private int bMaxLength;
+    private boolean bCanBeNull;
+    private Types Tipo_De_Dados;
     private boolean bValid = false;
 
-    public MeuTipo getTipo_De_Dados() {
+    public Types getTipo_De_Dados() {
         return Tipo_De_Dados;
     }
 
-    public void setTipo_De_Dados(MeuTipo Tipo_De_Dados) {
+    /**
+     *
+     * @param Tipo_De_Dados
+     */
+    @SuppressWarnings("unchecked")
+    public void setTipo_De_Dados(Types Tipo_De_Dados) {
         this.setText("");
         this.Tipo_De_Dados = Tipo_De_Dados;
         if (null != Tipo_De_Dados) {
@@ -54,19 +55,19 @@ public class JFormatTextField extends javax.swing.JFormattedTextField {
     }
 
     public int getMaxLength() {
-        return MaxLength;
+        return bMaxLength;
     }
 
     public void setMaxLength(int MaxLength) {
-        this.MaxLength = MaxLength;
+        this.bMaxLength = MaxLength;
     }
 
     public boolean isCanBeNull() {
-        return CanBeNull;
+        return bCanBeNull;
     }
 
     public void setCanBeNull(boolean CanBeNull) {
-        this.CanBeNull = CanBeNull;
+        this.bCanBeNull = CanBeNull;
     }
 
     public void jTextKeyTyped(java.awt.event.KeyEvent evt) {
@@ -165,60 +166,60 @@ public class JFormatTextField extends javax.swing.JFormattedTextField {
     }
 
 // validações //
-    private boolean ValidaCnpj(String jCnpj) {
-        String sValor = jCnpj;
+    private boolean authenticateCnpj(String jCnpj) {
+        String sValue = jCnpj;
         Pattern pattern = Pattern.compile("(\\d{2}.\\d{3}.\\d{3}\\/\\d{4}-\\d{2})"); //Validador de padroes 
         //(\d{2}.\d{3}.\d{3}\/\d{4}-\d{2}) -> [\d{2}] = decimal (2casas) obrigatorio [.] ponto obrigatorio [\/] / obrigatoria 
-        Matcher matcher = pattern.matcher(sValor); //Combinador que checa se o o validador combina com o texto do txt
+        Matcher matcher = pattern.matcher(sValue); //Combinador que checa se o o validador combina com o texto do txt
         if (matcher.find()) {
 
-            String[] sValorAux = sValor.split("-");
-            int iSoma = 0, j = 9, k = 5, iResto;
-            sValorAux[0] = sValorAux[0].replaceAll("\\.", "");
-            sValorAux[0] = sValorAux[0].replace("/", "");
+            String[] sValueAux = sValue.split("-");
+            int iAdd = 0, j = 9, k = 5, iRest;
+            sValueAux[0] = sValueAux[0].replaceAll("\\.", "");
+            sValueAux[0] = sValueAux[0].replace("/", "");
             for (int i = 0; i < 12; i++) {
                 if (i < 4) {
-                    iSoma += (Integer.parseInt(sValorAux[0].substring(i, i + 1)) * k);
+                    iAdd += (Integer.parseInt(sValueAux[0].substring(i, i + 1)) * k);
                     k--;
                 } else {
-                    iSoma += (Integer.parseInt(sValorAux[0].substring(i, i + 1)) * j);
+                    iAdd += (Integer.parseInt(sValueAux[0].substring(i, i + 1)) * j);
                     j--;
                 }
             }
-            iResto = iSoma % 11;
-            if (iResto < 2) {
-                sValorAux[0] += "0";
+            iRest = iAdd % 11;
+            if (iRest < 2) {
+                sValueAux[0] += "0";
             } else {
-                iResto = 11 - iResto;
-                sValorAux[0] += String.valueOf(iResto);
+                iRest = 11 - iRest;
+                sValueAux[0] += String.valueOf(iRest);
             }
             k = 6;
             j = 9;
-            iSoma = 0;
+            iAdd = 0;
             for (int i = 0; i < 13; i++) {
                 if (i < 5) {
-                    iSoma += (Integer.parseInt(sValorAux[0].substring(i, i + 1)) * k);
+                    iAdd += (Integer.parseInt(sValueAux[0].substring(i, i + 1)) * k);
                     k--;
                 } else {
-                    iSoma += (Integer.parseInt(sValorAux[0].substring(i, i + 1)) * j);
+                    iAdd += (Integer.parseInt(sValueAux[0].substring(i, i + 1)) * j);
                     j--;
                 }
             }
-            iResto = iSoma % 11;
-            if (iResto < 2) {
-                sValorAux[0] += "0";
+            iRest = iAdd % 11;
+            if (iRest < 2) {
+                sValueAux[0] += "0";
             } else {
-                iResto = 11 - iResto;
-                sValorAux[0] += String.valueOf(iResto);
+                iRest = 11 - iRest;
+                sValueAux[0] += String.valueOf(iRest);
             }
             try {
                 MaskFormatter format;
                 format = new MaskFormatter("**.***.***/****-**");
                 format.setValueContainsLiteralCharacters(false);
-                sValorAux[0] = format.valueToString(sValorAux[0]);
+                sValueAux[0] = format.valueToString(sValueAux[0]);
             } catch (ParseException e) {
             }
-            return sValorAux[0].equals(sValor);
+            return sValueAux[0].equals(sValue);
         }
         return false;
 
@@ -332,13 +333,13 @@ public class JFormatTextField extends javax.swing.JFormattedTextField {
     private void Valid() {
         if ((!getText().trim().equals("")) && (isCanBeNull())) { // Valida se o txt ta vazio e se nao pode estar vazio
             bValid = true;
-        } else if ((getTipo_De_Dados() == MeuTipo.CNPJ) && (ValidaCnpj(this.getText()))) { // se o tipo for TAL, ele chama o metodo ValidaTal
+        } else if ((getTipo_De_Dados() == Types.CNPJ) && (authenticateCnpj(this.getText()))) { // se o tipo for TAL, ele chama o metodo ValidaTal
             bValid = true;
-        } else if ((getTipo_De_Dados() == MeuTipo.CPF) && (ValidaCpf(this.getText()))) {
+        } else if ((getTipo_De_Dados() == Types.CPF) && (ValidaCpf(this.getText()))) {
             bValid = true;
-        } else if ((getTipo_De_Dados() == MeuTipo.RG) && (ValidaRG(this.getText()))) {
+        } else if ((getTipo_De_Dados() == Types.RG) && (ValidaRG(this.getText()))) {
             bValid = true;
-        } else if ((getTipo_De_Dados() == MeuTipo.Tel || getTipo_De_Dados() == MeuTipo.Cel) && ValidaTel(this.getText())) {
+        } else if ((getTipo_De_Dados() == Types.Tel || getTipo_De_Dados() == Types.Cel) && ValidaTel(this.getText())) {
             bValid = true;
         } else {
             bValid = false;
@@ -387,4 +388,9 @@ public class JFormatTextField extends javax.swing.JFormattedTextField {
     public void setbValid(boolean bValid) {
         this.bValid = bValid;
     }
+}
+
+enum Types {
+
+    CPF, CNPJ, RG, Tel, Cel
 }
