@@ -12,7 +12,7 @@ import javax.swing.text.MaskFormatter;
  *
  * @author BrunoCA-xD
  */
-public class JFormatTextField extends javax.swing.JFormattedTextField {
+public class JCustomTexfield extends javax.swing.JFormattedTextField {
 
     private int bMaxLength;
     private boolean bCanBeNull;
@@ -82,7 +82,7 @@ public class JFormatTextField extends javax.swing.JFormattedTextField {
         Valid();
     }
 
-    public JFormatTextField(String sText, boolean bNull, int iMaxLenght) {
+    public JCustomTexfield(String sText, boolean bNull, int iMaxLenght) {
         setMaxLength(iMaxLenght);
         setCanBeNull(bNull);
         Configura();
@@ -90,18 +90,18 @@ public class JFormatTextField extends javax.swing.JFormattedTextField {
 
     }
 
-    public JFormatTextField(String Texto) {
+    public JCustomTexfield(String Texto) {
         Configura();
         setText(Texto);
 
     }
 
-    public JFormatTextField() {
+    public JCustomTexfield() {
         Configura();
     }
 // Mascaras //
 
-    public void maskCNPJ(JFormatTextField jCnpj) {
+    public void maskCNPJ(JCustomTexfield jCnpj) {
         MaskFormatter Mask;
         try {
             //Cria uma nova mascara e seta o formato (**.***.***/****-**)
@@ -115,7 +115,7 @@ public class JFormatTextField extends javax.swing.JFormattedTextField {
         }
     }
 
-    public void maskCPF(JFormatTextField jcpf) {
+    public void maskCPF(JCustomTexfield jcpf) {
         MaskFormatter Mask;
         try {
 
@@ -129,7 +129,7 @@ public class JFormatTextField extends javax.swing.JFormattedTextField {
         }
     }
 
-    public void maskRG(JFormatTextField jRG) {
+    public void maskRG(JCustomTexfield jRG) {
         MaskFormatter Mask;
         try {
             Mask = new MaskFormatter("**.***.***-*");
@@ -141,7 +141,7 @@ public class JFormatTextField extends javax.swing.JFormattedTextField {
         }
     }
 
-    public void maskTel(JFormatTextField jTel) {
+    public void maskTel(JCustomTexfield jTel) {
         MaskFormatter Mask;
         try {
             Mask = new MaskFormatter("(**)****-****");
@@ -153,7 +153,7 @@ public class JFormatTextField extends javax.swing.JFormattedTextField {
         }
     }
 
-    public void maskCel(JFormatTextField jCel) {
+    public void maskCel(JCustomTexfield jCel) {
         MaskFormatter Mask;
         try {
             Mask = new MaskFormatter("(**)*****-****");
