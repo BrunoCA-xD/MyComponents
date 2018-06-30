@@ -14,7 +14,7 @@ import javax.swing.text.MaskFormatter;
  */
 public class JCustomTexfield extends javax.swing.JFormattedTextField {
 
-    private int bMaxLength;
+    private int iMaxLength;
     private boolean bCanBeNull;
     private Types Tipo_De_Dados;
     private boolean bValid = false;
@@ -55,11 +55,11 @@ public class JCustomTexfield extends javax.swing.JFormattedTextField {
     }
 
     public int getMaxLength() {
-        return bMaxLength;
+        return iMaxLength;
     }
 
     public void setMaxLength(int MaxLength) {
-        this.bMaxLength = MaxLength;
+        this.iMaxLength = MaxLength;
     }
 
     public boolean isCanBeNull() {
